@@ -1,8 +1,12 @@
-#include <iostream>
-#include <string>
+#ifndef EXTPERSONTYPE_H
+#define EXTPERSONTYPE_H
+
 #include "personType.h"
 #include "dateType.h"
 #include "addressType.h"
+#include <algorithm>
+#include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -14,48 +18,29 @@ private:
     string relationship;
 
 public:
-    // Constructor with default values
     extPersonType(string first = "", string last = "", int month = 1, int day = 1, int year = 1900,
                   string street = "", string city = "", string state = "", int zip = 10000,
                   string phone = "", string rel = "Friend")
-        : personType(first, last), birthdate(month, day, year), address(street, city, state, zip), phoneNumber(phone)
-    {
-        setRelationship(rel); // Initialize and validate relationship
-    }
+        : personType(first, last), birthdate(month, day, year), address(street, city, state, zip), phoneNumber(phone), relationship(rel) {}
 
-    // Setter for phoneNumber
-    void setPhoneNumber(const string &phone) {
-        phoneNumber = phone;
-    }
 
-    // Getter for phoneNumber
-    string getPhoneNumber() const {
-        return phoneNumber;
-    }
+    void setPhoneNumber(const string &phone) { phoneNumber = phone; }
+    string getPhoneNumber() const { return phoneNumber; }
 
-    // Setter for relationship (with validation)
-    void setRelationship(const string &rel) {
-        if (rel == "Family" || rel == "Friend" || rel == "Business") {
-            relationship = rel;
-        } else {
-            relationship = "";  // Invalid relationships set to empty string
-            cout << "Invalid relationship value!" << endl;
-        }
-    }
+    string getRelationship() const { return relationship; }
 
-    // Getter for relationship
-    string getRelationship() const {
-        return relationship;
-    }
+    int getBirthMonth() const { return birthdate.getMonth(); }  
+    dateType getBirthDate() const { return birthdate; } 
 
-    // Print function
     void print() const {
-        personType::print();  // Print name
-        birthdate.print();    // Print birth date
-        address.print();      // Print address
-        cout << phoneNumber << endl;
-        if (!relationship.empty()) {
-            cout << relationship << endl;
-        }
+        personType::print();
+        birthdate.print();
+        cout << endl;
+        address.print();
+        cout << "Phone: " << phoneNumber << endl;
+        cout << "Relationship: " << relationship << endl;
+    
     }
 };
+
+#endif
